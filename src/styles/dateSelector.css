@@ -1,0 +1,47 @@
+table{
+    border-collapse: collapse;
+}
+.day_name{
+    font-size:13px;
+    line-height:25px;
+    background:#F1F1F1;
+    color:#999999;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+}
+.day_element{
+    width:100%;
+    line-height:23px;
+    border-bottom:1px solid #ddd;
+    border-right:1px solid #ddd;
+    box-sizing:border-box;
+    cursor:pointer;
+    font-size:12px;
+    /* opacity:0.3; */
+    color:#00000030;
+    padding:1px 3px;
+}
+.day_element:hover{
+    background:#007FFF20;
+}
+.day_element.current{
+    color:#000;
+}
+.month_container{
+    display:inline-block;
+    width:100px;
+    text-align:center;
+}
+
+.calendar_container{
+    display:grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px;
+    border-left:1px solid #ddd;
+    border-top:1px solid #ddd;
+}
+
+.date-selector_arrow{
+    display:inline-block;
+    margin:0 10px;
+    cursor:pointer;
+}
