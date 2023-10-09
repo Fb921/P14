@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import DateSelector from "./DateSelector.js";
 import {useState,useRef} from 'react';
 import { useDispatch } from 'react-redux';
-import {addEmployee} from "./../utils/store.js"
+import {addEmployee} from "./../utils/store.js";
+import Modal from "./Modal.js";
 
 let emptyForm = {firstName:"",lastName:"",birthDate:"",startDate:"",street:"",city:"",state:"",zipCode:"",department:""};
 
@@ -15,6 +16,7 @@ function Index(){
     let department = ['Sales','Marketing','Engineering','Human Resources','Legal'];
 
     const dispatch = useDispatch();
+    const [displayModal,setDisplayModal] = useState(false);
     const [form,setForm] = useState(emptyForm);
     const refForm = useRef();
 
@@ -22,8 +24,13 @@ function Index(){
     function handleSubmit(){
         let filledForm = addEmployee(form);
         dispatch(filledForm);
+        setDisplayModal(true);
         setForm(emptyForm);
         refForm.current.reset();
+    }
+
+    function closeModal(){
+        setDisplayModal(false);
     }
 
     // Inputs setters
@@ -111,6 +118,7 @@ function Index(){
                     <SelectElement id="dep_selection" list={department} name="department" setter={setDepartment}></SelectElement>
                 </form>
                 <button class="submit_btn" onClick={handleSubmit}>Save</button>
+                <Modal id="modal1" content="Employee Created !" collapse={displayModal} closeModal={closeModal}></Modal>
             </div>
         </div>
     )
