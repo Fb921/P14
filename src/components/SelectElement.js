@@ -1,28 +1,22 @@
 import "../styles/selectElement.css";
 import {useState} from 'react';
 
-function SelectElement(props){
+function SelectElement({id, name, list, setter}){
     const [collapse,setCollapse] = useState(false);
-
-    function select_element(element, index, value){
-        document.querySelector("#"+props.id + "_selected_element").textContent = element;
-        document.querySelector("#"+props.id + "_selected_element").dataset.index = index;
-        document.querySelector("#"+props.id + "_selected_element").dataset.value = value;
-        
-        display_selectionList();
-    }
+    const [selection, setSelection] = useState(list[0]);
+    const [selectionValue, setSelectionValue] = useState(list[0]);
+    let listContainer = list.map((e,i)=>{return (<div key={'list_e_'+id+"_"+i} className="list_element" data-value={e} onClick={(el)=>{setter(el.target.dataset.value);setSelection(e);setSelectionValue(el.target.dataset.value);setCollapse(false)}}>{e}</div>)});
 
     function display_selectionList(){
         setCollapse(!collapse);
     }
-
-    let list = props.list.map((e,i)=>{return (<div key={'list_e_'+props.id+"_"+i} className="list_element" data-value={e} onClick={(el)=>{select_element(el.target.textContent,i,el.target.dataset.value)}}>{e}</div>)});
-
+    
     return (
         <div className="select_container">
-            <div className="selected_element" id={props.id + "_selected_element"} data-index="" onClick={display_selectionList} data-value={props.list[0]}>{props.list[0]}</div>
+            <input id={id + "_selected_element"} name={name} value={selectionValue} onClick={display_selectionList} type="hidden"/>
+            <div className="selected_element" onClick={display_selectionList}>{selection}</div>
             <div className="list-element_container" data-display={collapse}>
-                {list}
+                {listContainer}
             </div>
         </div>
     )
