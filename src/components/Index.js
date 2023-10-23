@@ -34,6 +34,7 @@ function Index(){
     }
 
     // Inputs setters
+    // Mettre tout dans une fonction : {...form, [index]: date}
     function setBirthD(date){
         let newForm = {... form, birthDate:date};
         setForm(newForm);

@@ -15,7 +15,8 @@ let header = [
 
 function EmployeeListPage(){
     
-    let employees = useSelector(state => state.employees);
+    // let employees = useSelector(state => state.employees);
+    let employees = JSON.parse(window.localStorage.getItem('employees'));
     return (
         <div class="employees-list_container">
             <h1>Current Employees</h1>

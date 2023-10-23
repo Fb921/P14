@@ -78,3 +78,6 @@ tbody tr:nth-child(2n + 1){
     top:-4px;
     left:0;
 }
+*[data-display="false"]{
+    display:none !important;
+}

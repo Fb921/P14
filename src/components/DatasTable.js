@@ -40,7 +40,7 @@ function DatasTable(props){
 
     const [currentPage,setCurrentPage] = useState(1);
     const [nbEntriesToShow,setNbEntriesToShow] = useState(2);
-    // const [totalPage,setTotalPage] = useState(Math.ceil(props.datas.length/2));
+    const [totalPage,setTotalPage] = useState(Math.ceil(props.datas.length/2));
     const [currentDatas,setCurrentDatas] = useState(props.datas);
     const [sortingAsc,setSortingAsc] = useState(true);
     const [sortingProperty,setSortingProperty] = useState(true);
@@ -49,33 +49,34 @@ function DatasTable(props){
     function createTBody(datas){
         datas = datas.slice(nbEntriesToShow*(currentPage - 1),nbEntriesToShow*currentPage);
         let result = datas.map((e,i)=>{
-            e = new Object(e);
-            let row = props.head.map((h,y)=>{
-                return <td>{e[h.key]}</td>
-            })
-            return (
-                <tr>{row}</tr>
-                )
-            })
-            return result;
-        }
+        e = new Object(e);
+        let row = props.head.map((h,y)=>{
+            return <td>{e[h.key]}</td>
+        })
+        return (
+            <tr>{row}</tr>
+            )
+        })
+        return result;
+    }
         
-        const [tableBody,setTableBody] = useState(createTBody(props.datas));
-        
-        function sort_by(property){
-            let order = !sortingAsc;
-            if(property != sortingProperty){
-                order = true;
-            }
-            let newdatas = currentDatas.sort( (o1,o2) => { return sortObj(o1,o2,property,order); });
-            setCurrentDatas(newdatas);
-            setTableBody(createTBody(newdatas));
-            setSortingAsc(order);
-            setSortingProperty(property);
+    const [tableBody,setTableBody] = useState(createTBody(props.datas));
+    
+    function sort_by(property){
+        let order = !sortingAsc;
+        if(property != sortingProperty){
+            order = true;
         }
-        let head = props.head.map((e,i)=>{
-            return <th key={"head_"+i}>{e.value} <div class="tri_container" onClick={()=>{ sort_by(e.key); }}><div><i class="fa fa-caret-up"></i></div><div><i class="fa fa-caret-down"></i></div></div></th>
-        })    
+        let newdatas = currentDatas.sort( (o1,o2) => { return sortObj(o1,o2,property,order); });
+        setCurrentDatas(newdatas);
+        setTableBody(createTBody(newdatas));
+        setSortingAsc(order);
+        setSortingProperty(property);
+    }
+
+    let head = props.head.map((e,i)=>{
+        return <th key={"head_"+i}>{e.value} <div class="tri_container" onClick={()=>{ sort_by(e.key); }}><div><i class="fa fa-caret-up"></i></div><div><i class="fa fa-caret-down"></i></div></div></th>
+    })
         
     function handleSearch(){
         let searchResult = search(props.datas,searchInput.current.value);
@@ -84,8 +85,20 @@ function DatasTable(props){
         setCurrentDatas(searchResult);
         setTotalEntries(searchResult.length);
         let nbPage = Math.ceil(searchResult.length/nbEntriesToShow);
+        setTotalPage(nbPage);
         if(currentPage > nbPage){
             setCurrentPage(nbPage);
+            let datas = searchResult.slice(nbEntriesToShow*(nbPage - 1),nbEntriesToShow*nbPage);
+            let result = datas.map((e,i)=>{
+                e = new Object(e);
+                let row = props.head.map((h,y)=>{
+                    return <td >{e[h.key]}</td>
+                })
+                return (
+                    <tr>{row}</tr>
+                )
+            })
+            setTableBody(result);
         }     
     }
 
@@ -130,6 +143,8 @@ function DatasTable(props){
             setCurrentPage(Math.ceil(currentDatas.length/newNb));
             cPage = Math.ceil(currentDatas.length/newNb);
         }
+        // let nbPage = Math.ceil(currentDatas.length/nbEntriesToShow);
+        setTotalPage(Math.ceil(currentDatas.length/newNb));
 
         let datas = currentDatas.slice(newNb*(cPage - 1),newNb*cPage);
         let result = datas.map((e,i)=>{
@@ -144,12 +159,29 @@ function DatasTable(props){
         setTableBody(result);
     }
 
+    function handlePagination(page){
+        if(page > 1){
+            setCurrentPage(page);
+            let datas = currentDatas.slice(nbEntriesToShow*(page - 1),nbEntriesToShow*page);
+            let result = datas.map((e,i)=>{
+                e = new Object(e);
+                let row = props.head.map((h,y)=>{
+                    return <td >{e[h.key]}</td>
+                })
+                return (
+                    <tr>{row}</tr>
+                )
+            })
+            setTableBody(result);
+        }
+    }
+
     return (
         <div>
             <div class="flex_container">
                 <div class="select-entries_container">
                     Show
-                    <select onChange={(e)=>{console.log("value e");console.log(e);handleNbEntryChange(e.target.value)}}>
+                    <select onChange={(e)=>{handleNbEntryChange(e.target.value)}}>
                         <option>2</option>
                         <option>10</option>
                         <option>25</option>
@@ -172,7 +204,16 @@ function DatasTable(props){
             </table>
             <div class="flex_container">
                 <div>Showing {nbEntriesToShow*(currentPage - 1) + 1} to {(nbEntriesToShow> totalEntries)?totalEntries:(nbEntriesToShow*currentPage)} of {totalEntries} entries</div>
-                <div class="pagination_container"><button onClick={handlePaginationPrev}>Prev</button><span class="current-page_container">{currentPage}</span><button onClick={handlePaginationNext}>Next</button>  </div>
+                <div class="pagination_container">
+                    <button onClick={handlePaginationPrev}>Prev</button>
+                    <span class="current-page_container" onClick={()=>handlePagination(currentPage)}>{(totalPage < 5)?1:currentPage}</span>
+                    <span data-display={(totalPage >= currentPage+1)  || (currentPage + 1 <= 5)} class="current-page_container" onClick={()=>handlePagination(currentPage+1)}>{(totalPage < 5)?2:currentPage+1}</span>
+                    <span data-display={totalPage >= currentPage+2} class="current-page_container" onClick={()=>handlePagination(currentPage+2)}>{currentPage+2}</span>
+                    <span data-display={totalPage >= currentPage+3} class="current-page_container" onClick={()=>handlePagination(currentPage+3)}>{currentPage+3}</span>
+                    <span data-display={totalPage >= currentPage+4} class="current-page_container" onClick={()=>handlePagination(currentPage+4)}>{currentPage+4}</span>
+                    <span data-display={totalPage >= currentPage+5}>...</span>
+                    <button onClick={handlePaginationNext}>Next</button>
+                </div>
             </div>
             <div class="text-center"><a href="/">Home</a></div>
         </div>
