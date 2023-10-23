@@ -160,7 +160,7 @@ function DatasTable(props){
     }
 
     function handlePagination(page){
-        if(page > 1){
+        if(page > 1 && page <= totalPage){
             setCurrentPage(page);
             let datas = currentDatas.slice(nbEntriesToShow*(page - 1),nbEntriesToShow*page);
             let result = datas.map((e,i)=>{
@@ -204,14 +204,15 @@ function DatasTable(props){
             </table>
             <div class="flex_container">
                 <div>Showing {nbEntriesToShow*(currentPage - 1) + 1} to {(nbEntriesToShow> totalEntries)?totalEntries:(nbEntriesToShow*currentPage)} of {totalEntries} entries</div>
-                <div class="pagination_container">
+                <div className="pagination_container">
                     <button onClick={handlePaginationPrev}>Prev</button>
-                    <span class="current-page_container" onClick={()=>handlePagination(currentPage)}>{(totalPage < 5)?1:currentPage}</span>
-                    <span data-display={(totalPage >= currentPage+1)  || (currentPage + 1 <= 5)} class="current-page_container" onClick={()=>handlePagination(currentPage+1)}>{(totalPage < 5)?2:currentPage+1}</span>
-                    <span data-display={totalPage >= currentPage+2} class="current-page_container" onClick={()=>handlePagination(currentPage+2)}>{currentPage+2}</span>
-                    <span data-display={totalPage >= currentPage+3} class="current-page_container" onClick={()=>handlePagination(currentPage+3)}>{currentPage+3}</span>
-                    <span data-display={totalPage >= currentPage+4} class="current-page_container" onClick={()=>handlePagination(currentPage+4)}>{currentPage+4}</span>
-                    <span data-display={totalPage >= currentPage+5}>...</span>
+                    <span className="current-page_container" onClick={()=>handlePagination((currentPage > totalPage - 4)?(totalPage - 4):currentPage)}>{(totalPage <= 5)?1:((currentPage > totalPage - 4)?(totalPage - 4):currentPage)}</span>
+                    {/* <span data-display={(totalPage >= currentPage+1) || (totalPage >= 2 && totalPage <= 5) || (currentPage + 1 == totalPage - 4)} className="current-page_container" onClick={()=>handlePagination((totalPage <= 5)?2:currentPage+1)}>{(totalPage <= 5)?2:currentPage+1}</span> */}
+                    <span data-display={(totalPage >= currentPage+1) || (totalPage >= 2 && totalPage <= 5) || (currentPage > totalPage - 4)} className="current-page_container" onClick={()=>handlePagination((totalPage <= 5)?2:((currentPage > totalPage - 4)?(totalPage - 3):(currentPage + 1)))}>{(totalPage <= 5)?2:((currentPage > totalPage - 4)?(totalPage - 3):(currentPage + 1))}</span>
+                    <span data-display={(totalPage >= currentPage+2) || (totalPage >= 3 && totalPage <= 5) || (currentPage > totalPage - 4)} className="current-page_container" onClick={()=>handlePagination((totalPage <= 5)?3:((currentPage > totalPage - 4)?(totalPage - 2):(currentPage + 2)))}>{(totalPage <= 5)?3:((currentPage > totalPage - 4)?(totalPage - 2):(currentPage + 2))}</span>
+                    <span data-display={(totalPage >= currentPage+3) || (totalPage >= 4 && totalPage <= 5) || (currentPage > totalPage - 4)} className="current-page_container" onClick={()=>handlePagination((totalPage <= 5)?4:((currentPage > totalPage - 4)?(totalPage - 1):(currentPage + 3)))}>{(totalPage <= 5)?4:((currentPage > totalPage - 4)?(totalPage - 1):(currentPage + 3))}</span>
+                    <span data-display={(totalPage >= currentPage+4) || (totalPage == 5) || (currentPage > totalPage - 4)} className="current-page_container" onClick={()=>handlePagination((totalPage <= 5)?5:((currentPage > totalPage - 4)?(totalPage):(currentPage + 4)))}>{(totalPage <= 5)?5:((currentPage > totalPage - 4)?(totalPage):(currentPage + 4))}</span>
+                    <span data-display={(totalPage >= currentPage+5) || (currentPage + 5 <= 5)} className="ellipsis_e">...</span>
                     <button onClick={handlePaginationNext}>Next</button>
                 </div>
             </div>

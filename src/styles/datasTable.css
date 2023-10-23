@@ -78,6 +78,9 @@ tbody tr:nth-child(2n + 1){
     top:-4px;
     left:0;
 }
+.ellipsis_e{
+    display:inline-block;
+}
 *[data-display="false"]{
     display:none !important;
 }
