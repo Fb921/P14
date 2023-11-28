@@ -7,6 +7,7 @@ import {useState,useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {addEmployee} from "./../utils/store.js";
 import Modal from "./Modal.js";
+import App from "@fb921/actions4";
 
 let emptyForm = {firstName:"",lastName:"",birthDate:"",startDate:"",street:"",city:"",state:"",zipCode:"",department:""};
 
@@ -78,6 +79,7 @@ function Index(){
             <div className="title">
                 <h1>HRnet</h1>
             </div>
+
             <div className="container">
                 <Link to="/employee-list" class="pink_link">View Current Employees</Link>
                 <h2>Create Employee</h2>

@@ -34,6 +34,10 @@ tbody tr:nth-child(2n + 1){
     display:inline-block;
     min-width:40px;
     text-align:center;
+    cursor:pointer;
+}
+.employees-list_container .current-page_container:hover{
+    background:#00000010;
 }
 .employees-list_container .pagination_container button{
     border:none;
