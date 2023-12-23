@@ -1,16 +1,16 @@
 {
   "name": "p14_front_app",
   "version": "0.1.0",
+  "main": "build/public/index.html",
   "private": false,
   "dependencies": {
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
-    "@fb921/actions": "^1.0.0",
-    "@fb921/actions2": "^1.2.10",
-    "@fb921/actions3": "^1.0.4",
-    "@fb921/actions4": "^0.1.3",
-    "@fb921/date_picker": "^0.1.0",
-    "@fb921/date_picker_plugin": "^0.1.0",
+    "@fb921/actions5": "^0.1.9",
+    "@fb921/datas-table": "^0.1.7",
+    "@fb921/date_picker_plugin": "^0.3.21",
+    "@fb921/modal": "^0.1.0",
+    "@fb921/select-element": "^0.1.1",
     "@reduxjs/toolkit": "^1.9.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -45,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

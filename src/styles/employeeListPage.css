@@ -1,3 +1,26 @@
 h1{
     text-align:center;
 }
+@media screen and (max-width:760px){
+    .employees-list_container h1{
+        font-size:27px;
+    }
+    h1 + div *{
+        font-size:12px;
+    }
+    .employees-list_container .flex_container{
+        flex-direction: column;
+        align-items:center;
+    }
+    .employees-list_container .select-entries_container{
+        margin-bottom:15px;
+    }
+    .employees-list_container .search_container input,
+    .employees-list_container .search_container button{
+        height:27px;
+    }
+    .employees-list_container .pagination_container{
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+}

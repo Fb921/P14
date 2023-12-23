@@ -1,5 +1,7 @@
-import DatasTable from "./DatasTable.js"
+import React from 'react';
+import DatasTable from '@fb921/datas-table';
 import { useSelector } from 'react-redux';
+import "./../styles/employeeListPage.css";
 
 let header = [
     {key:"firstName",value:"Firstname"},
@@ -15,12 +17,11 @@ let header = [
 
 function EmployeeListPage(){
     
-    // let employees = useSelector(state => state.employees);
-    let employees = JSON.parse(window.localStorage.getItem('employees'));
+    let employees = useSelector(state => state.employees);
+    
     return (
-        <div class="employees-list_container">
+        <div className="employees-list_container">
             <h1>Current Employees</h1>
-            
             <DatasTable head={header} datas={employees}></DatasTable>
         </div>
     )

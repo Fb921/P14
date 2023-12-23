@@ -1,13 +1,17 @@
+import React from 'react';
+import { useState, useRef, useEffect } from 'react';
 import "../styles/index.css";
-import SelectElement from "./SelectElement.js"
 import states from "../datas/state_list.js";
 import { Link } from "react-router-dom";
-import DateSelector from "./DateSelector.js";
-import {useState,useRef} from 'react';
 import { useDispatch } from 'react-redux';
-import {addEmployee} from "./../utils/store.js";
+import { addEmployee } from "./../utils/store.js";
+
+import SelectElement from './SelectElement.js';
+import DateSelector from './DateSelector.js';
 import Modal from "./Modal.js";
-import App from "@fb921/actions4";
+// import SelectElement from "@fb921/select-element";
+// import DatePicker from '@fb921/date_picker_plugin';
+// import Modal from "@fb921/modal";
 
 let emptyForm = {firstName:"",lastName:"",birthDate:"",startDate:"",street:"",city:"",state:"",zipCode:"",department:""};
 
@@ -18,8 +22,15 @@ function Index(){
 
     const dispatch = useDispatch();
     const [displayModal,setDisplayModal] = useState(false);
-    const [form,setForm] = useState(emptyForm);
+    const [form,setForm] = useState({...emptyForm,department:department[0],state:state_list[0]});
+    const [reset,setReset] = useState(false);
     const refForm = useRef();
+
+    useEffect(()=>{
+        if(reset){
+            setReset(false);
+        }
+    },[reset]);
 
     // Submit function
     function handleSubmit(){
@@ -27,6 +38,7 @@ function Index(){
         dispatch(filledForm);
         setDisplayModal(true);
         setForm(emptyForm);
+        setReset(true);
         refForm.current.reset();
     }
 
@@ -40,39 +52,46 @@ function Index(){
         let newForm = {... form, birthDate:date};
         setForm(newForm);
     }
+
     function setStartD(date){
         let newForm = {... form, startDate:date}
         setForm(newForm);
     }
+
     function setFirstName(value){
         let newForm = {... form, firstName:value}
         setForm(newForm);
     }
+
     function setLastName(value){
         let newForm = {... form, lastName:value}
         setForm(newForm);
     }
+
     function setStreet(value){
         let newForm = {... form, street:value}
         setForm(newForm);
     }
+
     function setCity(value){
         let newForm = {... form, city:value}
         setForm(newForm);
     }
+
     function setState(value){
         let newForm = {... form, state:value}
         setForm(newForm);
     }
+
     function setZipCode(value){
         let newForm = {... form, zipCode:value}
         setForm(newForm);
     }
+    
     function setDepartment(value){
         let newForm = {... form, department:value}
         setForm(newForm);
     }
-
 
     return(
         <div>
@@ -81,46 +100,46 @@ function Index(){
             </div>
 
             <div className="container">
-                <Link to="/employee-list" class="pink_link">View Current Employees</Link>
+                <Link to="/employee-list" className="pink_link">View Current Employees</Link>
                 <h2>Create Employee</h2>
                 <form action="#" id="create-employee" ref={refForm}>
                     <div className="align-input_container">
                         <div>
-                            <label for="first-name">First Name</label>
+                            <label htmlFor="first-name">First Name</label>
                             <input type="text" id="first-name" name="firstName" onInput={(e)=>{console.log(e);setFirstName(e.target.value)}}/>
                         </div>
                         <div>
-                            <label for="last-name">Last Name</label>
+                            <label htmlFor="last-name">Last Name</label>
                             <input type="text" id="last-name"  name="lastName" onInput={(e)=>{setLastName(e.target.value)}}/>
                         </div>
                     </div>
 
-                    <label for="date-of-birth">Date of Birth</label>
-                    <DateSelector id="birth" name="birthDate" dateSetter={setBirthD}></DateSelector>
+                    <label htmlFor="date-of-birth">Date of Birth</label>
+                    {!reset?<DateSelector id="birth" name="birthDate" dateSetter={setBirthD}/>:""}
                     
-                    <label for="start-date">Start Date</label>
-                    <DateSelector id="start" name="startDate" dateSetter={setStartD}></DateSelector>
+                    <label htmlFor="start-date">Start Date</label>
+                    {!reset?<DateSelector id="start" name="startDate" dateSetter={setStartD}/>:""}
 
                     <fieldset className="address">
                         <legend>Address</legend>
 
-                        <label for="street">Street</label>
+                        <label htmlFor="street">Street</label>
                         <input id="street" type="text" name="street" onChange={(e)=>{setStreet(e.target.value)}}/>
 
-                        <label for="city">City</label>
+                        <label htmlFor="city">City</label>
                         <input id="city" type="text" name="city" onChange={(e)=>{setCity(e.target.value)}}/>
 
-                        <label for="state">State</label>
-                        <SelectElement id="state_selection" list={state_list} name="state" setter={setState}></SelectElement>
+                        <label htmlFor="state">State</label>
+                        {!reset?<SelectElement id="state_selection" list={state_list} name="state" setter={setState}></SelectElement>:""}
 
-                        <label for="zip-code">Zip Code</label>
+                        <label htmlFor="zip-code">Zip Code</label>
                         <input id="zip-code" type="number" name="zipCode" onChange={(e)=>{setZipCode(e.target.value)}}/>
                     </fieldset>
 
-                    <label for="department">Department</label>
-                    <SelectElement id="dep_selection" list={department} name="department" setter={setDepartment}></SelectElement>
+                    <label htmlFor="department">Department</label>
+                    {!reset?<SelectElement id="dep_selection" list={department} name="department" setter={setDepartment}></SelectElement>:""}
                 </form>
-                <button class="submit_btn" onClick={handleSubmit}>Save</button>
+                <button className="submit_btn" onClick={handleSubmit}>Save</button>
                 <Modal id="modal1" content="Employee Created !" collapse={displayModal} closeModal={closeModal}></Modal>
             </div>
         </div>
