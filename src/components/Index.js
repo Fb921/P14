@@ -9,9 +9,6 @@ import { addEmployee } from "./../utils/store.js";
 import SelectElement from './SelectElement.js';
 import DateSelector from './DateSelector.js';
 import Modal from "./Modal.js";
-// import SelectElement from "@fb921/select-element";
-// import DatePicker from '@fb921/date_picker_plugin';
-// import Modal from "@fb921/modal";
 
 let emptyForm = {firstName:"",lastName:"",birthDate:"",startDate:"",street:"",city:"",state:"",zipCode:"",department:""};
 
@@ -22,7 +19,7 @@ function Index(){
 
     const dispatch = useDispatch();
     const [displayModal,setDisplayModal] = useState(false);
-    const [form,setForm] = useState({...emptyForm,department:department[0],state:state_list[0]});
+    const [form,setForm] = useState({...emptyForm});
     const [reset,setReset] = useState(false);
     const refForm = useRef();
 
@@ -106,7 +103,7 @@ function Index(){
                     <div className="align-input_container">
                         <div>
                             <label htmlFor="first-name">First Name</label>
-                            <input type="text" id="first-name" name="firstName" onInput={(e)=>{console.log(e);setFirstName(e.target.value)}}/>
+                            <input type="text" id="first-name" name="firstName" onInput={(e)=>{setFirstName(e.target.value)}}/>
                         </div>
                         <div>
                             <label htmlFor="last-name">Last Name</label>

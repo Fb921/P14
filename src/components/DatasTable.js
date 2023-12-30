@@ -1,8 +1,6 @@
 import '../styles/datasTable.css'
 import {useState , useRef} from 'react';
 
-// let nb_entries = [2,10,25,50,100]
-
 function matchesSearch(rowDatas,searchWord){
     for(let prop in rowDatas){
         if((rowDatas[prop].toLowerCase().indexOf(searchWord.toLowerCase()) > -1)?true:false){
@@ -16,8 +14,6 @@ function search(datas,searchWord){
     let result = datas.filter(e=>{return matchesSearch(e,searchWord)});
     return result;
 }
-
-// let defaultNbToShow = 25;
 
 function sortObj(obj1,obj2,property,order){
     let o1 = new Object();

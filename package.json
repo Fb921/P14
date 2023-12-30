@@ -7,7 +7,7 @@
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
     "@fb921/actions5": "^0.1.9",
-    "@fb921/datas-table": "^0.1.7",
+    "@fb921/datas-table": "^0.1.13",
     "@fb921/date_picker_plugin": "^0.3.21",
     "@fb921/modal": "^0.1.0",
     "@fb921/select-element": "^0.1.1",

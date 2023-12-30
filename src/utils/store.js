@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 const initialState = {
-    employees:JSON.parse(window.localStorage.getItem('employees'))
+    employees:JSON.parse(window.localStorage.getItem('employees'))||[]
 }
 
 export const addEmployee = (obj)=>{return {

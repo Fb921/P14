@@ -96,15 +96,15 @@ function DateSelector({id, name, dateSetter}){
     
     return (
         <div>
-            <input defaultValue={""} name={name} class="date-picker_input" id={"date_picker_"+id} value={date} onBlur={()=>{setCollapse(false)}} onMouseDown={()=>{if(!collapse){display_month(5,2023);setCollapse(true);}else{setCollapse(false)}}}/>
+            <input name={name} className="date-picker_input" id={"date_picker_"+id} value={date} onBlur={()=>{setCollapse(false)}} onMouseDown={()=>{if(!collapse){display_month(5,2023);setCollapse(true);}else{setCollapse(false)}}} readOnly={true}/>
             <div className="date-selector_container" data-display={collapse}>
                 <div className="date-selector_header">
                     <div>
-                        <span className='date-selector_arrow left' onClick={()=>{if(month == 0){display_month(11,year-1)}else{display_month(month-1,year)}}}><i class="fa fa-angle-left"></i></span>
-                        <span class="month_container">{months[month]}</span>
-                        <span className='date-selector_arrow right' onClick={()=>{if(month == 11){display_month(0,year+1)}else{display_month(month+1,year)}}}><i class="fa fa-angle-right"></i></span> 
+                        <span className='date-selector_arrow left' onClick={()=>{if(month == 0){display_month(11,year-1)}else{display_month(month-1,year)}}}><i className="fa fa-angle-left"></i></span>
+                        <span className="month_container">{months[month]}</span>
+                        <span className='date-selector_arrow right' onClick={()=>{if(month == 11){display_month(0,year+1)}else{display_month(month+1,year)}}}><i className="fa fa-angle-right"></i></span> 
                     </div>
-                    <select defaultValue={year} value={year} onChange={(e)=>{display_month(month,e.target.value)}}>
+                    <select value={year} onChange={(e)=>{display_month(month,e.target.value)}}>
                         <option>2021</option>
                         <option>2022</option>
                         <option>2023</option>

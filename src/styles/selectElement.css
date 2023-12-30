@@ -3,6 +3,7 @@
 }
 .selected_element{
     height:35px;
+    line-height:35px;
     border:none;
     border-radius:3px;
     box-sizing:border-box;
